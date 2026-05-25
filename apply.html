@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply | Astro SMP</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght=300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #030206;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .space-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 50%, #0d0b21 0%, #030206 100%);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 8%;
+            background: rgba(3, 2, 6, 0.9);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .brand-wrapper { display: flex; align-items: center; gap: 20px; position: relative; }
+        .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-text { font-size: 24px; font-weight: 800; letter-spacing: 1.5px; color: #a855f7; text-transform: uppercase; }
+
+        /* PROFILE STYLE */
+        .user-profile-wrapper { position: relative; display: inline-block; }
+        .user-profile-display {
+            display: flex; align-items: center; gap: 10px; background: rgba(168, 85, 247, 0.15); border: 1px solid #a855f7;
+            padding: 6px 14px; border-radius: 30px; box-shadow: 0 0 10px rgba(168, 85, 247, 0.2); cursor: pointer; transition: all 0.3s ease;
+        }
+        .user-avatar { width: 28px; height: 28px; border-radius: 6px; border: 1px solid #ffffff; background: #221f3b; }
+        .user-name-text { font-size: 13px; font-weight: 700; color: #ffffff; }
+        .settings-icon { font-size: 11px; color: #c084fc; }
+
+        .profile-dropdown {
+            position: absolute; top: 50px; left: 0; background: #0d0b21; border: 1px solid #a855f7; border-radius: 12px;
+            width: 200px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); display: none; flex-direction: column; overflow: hidden; z-index: 1010;
+        }
+        .profile-dropdown.active { display: flex; }
+        .dropdown-btn { background: none; border: none; color: #ffffff; padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; width: 100%; }
+        .dropdown-btn:hover { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
+        .dropdown-btn.logout-style { color: #ff4a4a; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+        .dropdown-btn.logout-style:hover { background: rgba(255, 74, 74, 0.1); color: #ff4a4a; }
+
+        .nav-links { display: flex; list-style: none; gap: 15px; align-items: center; }
+        .nav-links li a { color: #ffffff; text-decoration: none; font-weight: 700; font-size: 14px; text-transform: uppercase; padding: 10px 18px; border-radius: 8px; transition: all 0.3s ease; }
+        .nav-links li.active a { background: rgba(168, 85, 247, 0.08); border: 2px solid #a855f7; color: #c084fc; }
+        .nav-links li a:hover { background: rgba(255, 255, 255, 0.05); color: #c084fc; }
+
+        /* MODAL BOX LOGIN */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 2, 6, 0.85);
+            backdrop-filter: blur(10px); z-index: 2000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-container { background: rgba(13, 11, 33, 0.95); border: 2px solid rgba(168, 85, 247, 0.5); padding: 35px; border-radius: 20px; width: 100%; max-width: 400px; text-align: center; position: relative; }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 24px; color: #928da3; cursor: pointer; }
+        .modal-title { font-size: 24px; font-weight: 800; color: #a855f7; text-transform: uppercase; margin-bottom: 5px; }
+        .modal-subtitle { color: #928da3; font-size: 13px; margin-bottom: 20px; }
+        .input-group { text-align: left; margin-bottom: 15px; }
+        .input-group label { display: block; font-size: 11px; color: #cbd5e1; margin-bottom: 5px; text-transform: uppercase; font-weight: 600; }
+        .input-group input, .input-group textarea { width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; color: #ffffff; font-size: 14px; outline: none; }
+        .input-group input:focus, .input-group textarea:focus { border-color: #a855f7; }
+        .modal-btn { width: 100%; padding: 12px; background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); border: none; border-radius: 8px; color: #ffffff; font-size: 14px; font-weight: 700; text-transform: uppercase; cursor: pointer; }
+
+        /* Application Form Section */
+        .apply-section { padding: 60px 8%; text-align: center; }
+        .apply-section h2 { font-size: 36px; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; }
+        .apply-section p { color: #928da3; margin-bottom: 40px; font-size: 16px; }
+        .form-container { background: rgba(13, 11, 33, 0.5); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 16px; padding: 40px; max-width: 600px; margin: 0 auto; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
+        footer { text-align: center; padding: 40px; margin-top: 80px; border-top: 1px solid rgba(255, 255, 255, 0.05); font-size: 13px; color: #555066; }
+    </style>
+</head>
+<body>
+
+    <div class="space-bg"></div>
+
+    <nav>
+        <div class="brand-wrapper">
+            <a href="index.html" class="logo-container">
+                <span class="logo-text">ASTRO SMP</span>
+            </a>
+            <div class="user-profile-wrapper" id="profileWrapper"></div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">🏠 HOME</a></li>
+            <li class="active"><a href="apply.html">📄 APPLY</a></li>
+            <li><a href="shop.html">🛒 STORE</a></li>
+            <li><a href="champions.html">🏆 CHAMPIONS</a></li>
+        </ul>
+    </nav>
+
+    <section class="apply-section">
+        <h2>📄 Whitelist Application</h2>
+        <p>Fill out the form below to apply for entry into the Astro SMP world!</p>
+        
+        <div class="form-container">
+            <form action="https://formspree.io/f/xanyekaa" method="POST">
+                <div class="input-group">
+                    <label>Your Minecraft IGN</label>
+                    <input type="text" name="ign" placeholder="Enter your username" required>
+                </div>
+                <div class="input-group">
+                    <label>Discord Username</label>
+                    <input type="text" name="discord" placeholder="username#0000" required>
+                </div>
+                <div class="input-group">
+                    <label>Age</label>
+                    <input type="number" name="age" placeholder="Your age" required>
+                </div>
+                <div class="input-group">
+                    <label>Why do you want to join Astro SMP?</label>
+                    <textarea name="reason" rows="5" placeholder="Tell us a bit about yourself..." required></textarea>
+                </div>
+                <button type="submit" class="modal-btn" style="width:100%; padding:14px; margin-top:10px;">SUBMIT APPLICATION</button>
+            </form>
+        </div>
+    </section>
+
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-container">
+            <span class="close-modal" onclick="closeLoginModal()">&times;</span>
+            <div class="modal-title">Minecraft Authentication</div>
+            <div class="modal-subtitle">Enter details to sync your custom profile overlay</div>
+            <form onsubmit="handleLoginSubmit(event)">
+                <div class="input-group">
+                    <label>Minecraft IGN (Username)</label>
+                    <input type="text" id="loginIGN" placeholder="e.g., Steve_Cosmic" required>
+                </div>
+                <div class="input-group">
+                    <label>In-game Password</label>
+                    <input type="password" id="loginPass" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="modal-btn">PROCEED & SYNC</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Astro SMP. All Rights Reserved. Designed for Sri Lankan Minecrafters.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() { renderProfile(); });
+
+        function renderProfile() {
+            const wrapper = document.getElementById('profileWrapper');
+            const savedUser = localStorage.getItem('astro_user');
+            if (!savedUser) {
+                wrapper.innerHTML = `<div class="user-profile-display" onclick="openLoginModal()"><div class="user-name-text">🔒 LOGIN VIA IGN</div></div>`;
+            } else {
+                const user = JSON.parse(savedUser);
+                wrapper.innerHTML = `
+                    <div class="user-profile-display" onclick="toggleDropdown(event)">
+                        <img src="${user.avatar}" class="user-avatar" alt="Skin">
+                        <div class="user-name-text">${user.name}</div>
+                        <span class="settings-icon">▼</span>
+                    </div>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <button class="dropdown-btn" onclick="editUsername()">✏️ Change Display Name</button>
+                        <button class="dropdown-btn" onclick="editAvatar()">👤 Change Character IGN</button>
+                        <button class="dropdown-btn logout-style" onclick="logoutUser()">🚪 Log Out System</button>
+                    </div>`;
+            }
+        }
+
+        function openLoginModal() { document.getElementById('loginModal').classList.add('active'); }
+        // Aynı metotları kullanmaya devam edin
+        function closeLoginModal() { document.getElementById('loginModal').classList.remove('active'); }
+        function handleLoginSubmit(event) {
+            event.preventDefault();
+            const ign = document.getElementById('loginIGN').value.trim();
+            if (ign !== "") {
+                localStorage.setItem('astro_user', JSON.stringify({ name: ign, avatar: `https://mc-heads.net/avatar/${ign}/40` }));
+                closeLoginModal(); renderProfile();
+            }
+        }
+        function toggleDropdown(event) { event.stopPropagation(); document.getElementById('profileDropdown').classList.toggle('active'); }
+        window.onclick = function() { const d = document.getElementById('profileDropdown'); if (d && d.classList.contains('active')) d.classList.remove('active'); }
+        function editUsername() { const s = JSON.parse(localStorage.getItem('astro_user')); const n = prompt("Enter Name:", s.name); if (n && n.trim() !== "") { s.name = n.trim(); localStorage.setItem('astro_user', JSON.stringify(s)); renderProfile(); } }
+        function editAvatar() { const s = JSON.parse(localStorage.getItem('astro_user')); const n = prompt("Enter Minecraft IGN:"); if (n && n.trim() !== "") { s.avatar = `https://mc-heads.net/avatar/${n.trim()}/40`; localStorage.setItem('astro_user', JSON.stringify(s)); renderProfile(); } }
+        function logoutUser() { localStorage.removeItem('astro_user'); renderProfile(); window.location.reload(); }
+    </script>
+</body>
+</html>
