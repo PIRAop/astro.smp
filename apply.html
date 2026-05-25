@@ -174,7 +174,6 @@
         function sendToDiscord(event) {
             event.preventDefault();
 
-            // A megadott Discord Webhook sikeresen integrálva
             const webhookURL = "https://discord.com/api/webhooks/1508123956052234311/TUuZrHf3ZXOHW62rSexH38pxThajxDRK3FeFglq_6I06LIxbCKch0nB1NB21kwPJAiL9";
 
             const ign = document.getElementById('appIGN').value.trim();
@@ -213,15 +212,16 @@
             })
             .then(response => {
                 if(response.ok) {
-                    alert("🎉 Sikeres jelentkezés! Az adatok elküldve a Discord szerverre.");
+                    // Alert පණිවිඩය ඉංග්‍රීසි බසට නිවැරදි කරන ලදී
+                    alert("🎉 Success! Your application has been sent to the Discord Server.");
                     document.getElementById('whitelistForm').reset();
                 } else {
-                    alert("❌ Hiba történt a küldés során. Ellenőrizd a webhook beállításokat.");
+                    alert("❌ Error sending application. Please check your Webhook settings.");
                 }
             })
             .catch(error => {
                 console.error("Error:", error);
-                alert("❌ Hálózati hiba történt az adatok elküldésekor.");
+                alert("❌ Network error! Failed to send application.");
             })
             .finally(() => {
                 submitBtn.innerText = "SUBMIT APPLICATION";
