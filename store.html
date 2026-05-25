@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apply | Astro SMP</title>
+    <title>Store | Astro SMP</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght=300;400;500;600;700;800&display=swap');
         
@@ -88,15 +88,21 @@
         .modal-subtitle { color: #928da3; font-size: 13px; margin-bottom: 20px; }
         .input-group { text-align: left; margin-bottom: 15px; }
         .input-group label { display: block; font-size: 11px; color: #cbd5e1; margin-bottom: 5px; text-transform: uppercase; font-weight: 600; }
-        .input-group input, .input-group textarea { width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; color: #ffffff; font-size: 14px; outline: none; }
-        .input-group input:focus, .input-group textarea:focus { border-color: #a855f7; }
+        .input-group input { width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; color: #ffffff; font-size: 14px; outline: none; }
         .modal-btn { width: 100%; padding: 12px; background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); border: none; border-radius: 8px; color: #ffffff; font-size: 14px; font-weight: 700; text-transform: uppercase; cursor: pointer; }
 
-        /* Application Form Section */
-        .apply-section { padding: 60px 8%; text-align: center; }
-        .apply-section h2 { font-size: 36px; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; }
-        .apply-section p { color: #928da3; margin-bottom: 40px; font-size: 16px; }
-        .form-container { background: rgba(13, 11, 33, 0.5); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 16px; padding: 40px; max-width: 600px; margin: 0 auto; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        /* Store Ranks Section */
+        .ranks-section { padding: 60px 8%; text-align: center; }
+        .ranks-section h2 { font-size: 36px; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; }
+        .ranks-section p { color: #928da3; margin-bottom: 40px; font-size: 16px; }
+        .ranks-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; max-width: 1000px; margin: 0 auto; }
+        .rank-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 30px 20px; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .rank-card:hover { border-color: #a855f7; background: rgba(168, 85, 247, 0.03); transform: translateY(-5px); }
+        .rank-icon { font-size: 40px; }
+        .rank-card h3 { font-size: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        .rank-price { display: block; width: 100%; padding: 12px; background: rgba(168, 85, 247, 0.1); border: 1px solid #a855f7; border-radius: 8px; color: #c084fc; font-weight: 700; text-decoration: none; font-size: 14px; transition: all 0.2s; }
+        .rank-price:hover { background: #a855f7; color: #ffffff; }
+        .rank-notice { grid-column: 1 / -1; margin-top: 30px; background: rgba(255, 74, 74, 0.05); border: 1px dashed #ff4a4a; padding: 15px; border-radius: 10px; font-size: 13px; color: #cbd5e1; text-align: left; line-height: 1.5; }
 
         footer { text-align: center; padding: 40px; margin-top: 80px; border-top: 1px solid rgba(255, 255, 255, 0.05); font-size: 13px; color: #555066; }
     </style>
@@ -114,36 +120,40 @@
         </div>
         <ul class="nav-links">
             <li><a href="index.html">🏠 HOME</a></li>
-            <li class="active"><a href="apply.html">📄 APPLY</a></li>
-            <li><a href="shop.html">🛒 STORE</a></li>
+            <li><a href="apply.html">📄 APPLY</a></li>
+            <li class="active"><a href="shop.html">🛒 STORE</a></li>
             <li><a href="champions.html">🏆 CHAMPIONS</a></li>
         </ul>
     </nav>
 
-    <section class="apply-section">
-        <h2>📄 Whitelist Application</h2>
-        <p>Fill out the form below to apply for entry into the Astro SMP world!</p>
+    <section class="ranks-section">
+        <h2>Server Store</h2>
+        <p>Support our server and unlock epic perks!</p>
         
-        <div class="form-container">
-            <form id="whitelistForm" onsubmit="sendToDiscord(event)">
-                <div class="input-group">
-                    <label>Your Minecraft IGN</label>
-                    <input type="text" id="appIGN" placeholder="Enter your username" required>
-                </div>
-                <div class="input-group">
-                    <label>Discord Username</label>
-                    <input type="text" id="appDiscord" placeholder="e.g., steve_cosmic" required>
-                </div>
-                <div class="input-group">
-                    <label>Age</label>
-                    <input type="number" id="appAge" placeholder="Your age" required>
-                </div>
-                <div class="input-group">
-                    <label>Why do you want to join Astro SMP?</label>
-                    <textarea id="appReason" rows="5" placeholder="Tell us a bit about yourself..." required></textarea>
-                </div>
-                <button type="submit" id="submitBtn" class="modal-btn" style="width:100%; padding:14px; margin-top:10px;">SUBMIT APPLICATION</button>
-            </form>
+        <div class="ranks-container">
+            <div class="rank-card">
+                <div class="rank-icon">💎</div>
+                <h3>VIP</h3>
+                <a href="https://discord.gg/KFfQydKV" target="_blank" class="rank-price">රු. 100 - BUY</a>
+            </div>
+            <div class="rank-card">
+                <div class="rank-icon">⭐</div>
+                <h3>ELITE</h3>
+                <a href="https://discord.gg/KFfQydKV" target="_blank" class="rank-price">රු. 200 - BUY</a>
+            </div>
+            <div class="rank-card">
+                <div class="rank-icon">🏆</div>
+                <h3>LEGEND</h3>
+                <a href="https://discord.gg/KFfQydKV" target="_blank" class="rank-price">රු. 300 - BUY</a>
+            </div>
+            <div class="rank-card">
+                <div class="rank-icon">👑</div>
+                <h3>MYTHIC</h3>
+                <a href="https://discord.gg/KFfQydKV" target="_blank" class="rank-price">රු. 400 - BUY</a>
+            </div>
+            <div class="rank-notice">
+                ⚠️ <strong>IMPORTANT NOTE:</strong> All purchased ranks are strictly valid for the active season in which they are bought. Ranks will reset when a new season begins.
+            </div>
         </div>
     </section>
 
@@ -171,64 +181,6 @@
     </footer>
 
     <script>
-        function sendToDiscord(event) {
-            event.preventDefault();
-
-            // A megadott Discord Webhook sikeresen integrálva
-            const webhookURL = "https://discord.com/api/webhooks/1508123956052234311/TUuZrHf3ZXOHW62rSexH38pxThajxDRK3FeFglq_6I06LIxbCKch0nB1NB21kwPJAiL9";
-
-            const ign = document.getElementById('appIGN').value.trim();
-            const discordUser = document.getElementById('appDiscord').value.trim();
-            const age = document.getElementById('appAge').value.trim();
-            const reason = document.getElementById('appReason').value.trim();
-            const submitBtn = document.getElementById('submitBtn');
-
-            submitBtn.innerText = "SENDING APPLICATION...";
-            submitBtn.disabled = true;
-
-            const payload = {
-                username: "Astro SMP Application Bot",
-                avatar_url: "https://mc-heads.net/avatar/Steve/40",
-                embeds: [{
-                    title: "🌌 New Whitelist Application Received!",
-                    color: 11032055,
-                    fields: [
-                        { name: "👤 Minecraft IGN", value: `\`${ign}\``, inline: true },
-                        { name: "💬 Discord Account", value: `\`${discordUser}\``, inline: true },
-                        { name: "🎂 Player Age", value: `\`${age} years old\``, inline: true },
-                        { name: "📝 Reason to Join", value: reason }
-                    ],
-                    thumbnail: {
-                        url: `https://mc-heads.net/body/${ign}/right`
-                    },
-                    timestamp: new Date().toISOString(),
-                    footer: { text: "Astro SMP System logs" }
-                }]
-            };
-
-            fetch(webhookURL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            })
-            .then(response => {
-                if(response.ok) {
-                    alert("🎉 Sikeres jelentkezés! Az adatok elküldve a Discord szerverre.");
-                    document.getElementById('whitelistForm').reset();
-                } else {
-                    alert("❌ Hiba történt a küldés során. Ellenőrizd a webhook beállításokat.");
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("❌ Hálózati hiba történt az adatok elküldésekor.");
-            })
-            .finally(() => {
-                submitBtn.innerText = "SUBMIT APPLICATION";
-                submitBtn.disabled = false;
-            });
-        }
-
         document.addEventListener("DOMContentLoaded", function() { renderProfile(); });
 
         function renderProfile() {
