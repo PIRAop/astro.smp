@@ -125,24 +125,24 @@
         <p>Fill out the form below to apply for entry into the Astro SMP world!</p>
         
         <div class="form-container">
-            <form action="https://formspree.io/f/xanyekaa" method="POST">
+            <form id="whitelistForm" onsubmit="sendToDiscord(event)">
                 <div class="input-group">
                     <label>Your Minecraft IGN</label>
-                    <input type="text" name="ign" placeholder="Enter your username" required>
+                    <input type="text" id="appIGN" placeholder="Enter your username" required>
                 </div>
                 <div class="input-group">
                     <label>Discord Username</label>
-                    <input type="text" name="discord" placeholder="username#0000" required>
+                    <input type="text" id="appDiscord" placeholder="e.g., steve_cosmic" required>
                 </div>
                 <div class="input-group">
                     <label>Age</label>
-                    <input type="number" name="age" placeholder="Your age" required>
+                    <input type="number" id="appAge" placeholder="Your age" required>
                 </div>
                 <div class="input-group">
                     <label>Why do you want to join Astro SMP?</label>
-                    <textarea name="reason" rows="5" placeholder="Tell us a bit about yourself..." required></textarea>
+                    <textarea id="appReason" rows="5" placeholder="Tell us a bit about yourself..." required></textarea>
                 </div>
-                <button type="submit" class="modal-btn" style="width:100%; padding:14px; margin-top:10px;">SUBMIT APPLICATION</button>
+                <button type="submit" id="submitBtn" class="modal-btn" style="width:100%; padding:14px; margin-top:10px;">SUBMIT APPLICATION</button>
             </form>
         </div>
     </section>
@@ -171,6 +171,64 @@
     </footer>
 
     <script>
+        function sendToDiscord(event) {
+            event.preventDefault();
+
+            // A megadott Discord Webhook sikeresen integrálva
+            const webhookURL = "https://discord.com/api/webhooks/1508123956052234311/TUuZrHf3ZXOHW62rSexH38pxThajxDRK3FeFglq_6I06LIxbCKch0nB1NB21kwPJAiL9";
+
+            const ign = document.getElementById('appIGN').value.trim();
+            const discordUser = document.getElementById('appDiscord').value.trim();
+            const age = document.getElementById('appAge').value.trim();
+            const reason = document.getElementById('appReason').value.trim();
+            const submitBtn = document.getElementById('submitBtn');
+
+            submitBtn.innerText = "SENDING APPLICATION...";
+            submitBtn.disabled = true;
+
+            const payload = {
+                username: "Astro SMP Application Bot",
+                avatar_url: "https://mc-heads.net/avatar/Steve/40",
+                embeds: [{
+                    title: "🌌 New Whitelist Application Received!",
+                    color: 11032055,
+                    fields: [
+                        { name: "👤 Minecraft IGN", value: `\`${ign}\``, inline: true },
+                        { name: "💬 Discord Account", value: `\`${discordUser}\``, inline: true },
+                        { name: "🎂 Player Age", value: `\`${age} years old\``, inline: true },
+                        { name: "📝 Reason to Join", value: reason }
+                    ],
+                    thumbnail: {
+                        url: `https://mc-heads.net/body/${ign}/right`
+                    },
+                    timestamp: new Date().toISOString(),
+                    footer: { text: "Astro SMP System logs" }
+                }]
+            };
+
+            fetch(webhookURL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if(response.ok) {
+                    alert("🎉 Sikeres jelentkezés! Az adatok elküldve a Discord szerverre.");
+                    document.getElementById('whitelistForm').reset();
+                } else {
+                    alert("❌ Hiba történt a küldés során. Ellenőrizd a webhook beállításokat.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("❌ Hálózati hiba történt az adatok elküldésekor.");
+            })
+            .finally(() => {
+                submitBtn.innerText = "SUBMIT APPLICATION";
+                submitBtn.disabled = false;
+            });
+        }
+
         document.addEventListener("DOMContentLoaded", function() { renderProfile(); });
 
         function renderProfile() {
@@ -195,7 +253,6 @@
         }
 
         function openLoginModal() { document.getElementById('loginModal').classList.add('active'); }
-        // Aynı metotları kullanmaya devam edin
         function closeLoginModal() { document.getElementById('loginModal').classList.remove('active'); }
         function handleLoginSubmit(event) {
             event.preventDefault();
