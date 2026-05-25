@@ -90,6 +90,7 @@
         .input-group label { display: block; font-size: 11px; color: #cbd5e1; margin-bottom: 5px; text-transform: uppercase; font-weight: 600; }
         .input-group input, .input-group textarea, .input-group select { width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; color: #ffffff; font-size: 14px; outline: none; }
         .input-group input:focus, .input-group select:focus { border-color: #a855f7; }
+        .input-group input[type="file"] { padding: 8px; background: rgba(168, 85, 247, 0.05); border: 1px dashed rgba(168, 85, 247, 0.4); cursor: pointer; }
         .modal-btn { width: 100%; padding: 12px; background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); border: none; border-radius: 8px; color: #ffffff; font-size: 14px; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; }
         .modal-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(168, 85, 247, 0.4); }
 
@@ -98,18 +99,18 @@
         .store-section h2 { font-size: 36px; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; }
         .store-section p { color: #928da3; margin-bottom: 40px; font-size: 16px; }
 
-        .store-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; max-width: 1100px; margin: 0 auto 50px auto; }
+        .store-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto 50px auto; }
         
         /* Item Card Style with Selection Effect */
-        .item-card { background: rgba(13, 11, 33, 0.5); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 30px 20px; text-align: center; transition: all 0.3s ease; cursor: pointer; position: relative; }
+        .item-card { background: rgba(13, 11, 33, 0.5); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 25px 15px; text-align: center; transition: all 0.3s ease; cursor: pointer; position: relative; }
         .item-card:hover { transform: translateY(-5px); border-color: rgba(168, 85, 247, 0.5); }
         .item-card.selected { border: 2px solid #a855f7; background: rgba(168, 85, 247, 0.08); box-shadow: 0 0 20px rgba(168, 85, 247, 0.3); }
         
-        .item-rank-badge { width: 70px; height: 70px; margin: 0 auto 15px auto; background: rgba(168, 85, 247, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; color: #a855f7; }
-        .item-title { font-size: 22px; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .item-price { font-size: 26px; font-weight: 800; color: #c084fc; margin-bottom: 15px; }
-        .item-perks { list-style: none; text-align: left; color: #cbd5e1; font-size: 13px; margin-bottom: 20px; padding-left: 10px; }
-        .item-perks li { margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+        .item-rank-badge { width: 60px; height: 60px; margin: 0 auto 12px auto; background: rgba(168, 85, 247, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; color: #a855f7; }
+        .item-title { font-size: 20px; font-weight: 800; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .item-price { font-size: 24px; font-weight: 800; color: #c084fc; margin-bottom: 15px; }
+        .item-perks { list-style: none; text-align: left; color: #cbd5e1; font-size: 12px; margin-bottom: 20px; padding-left: 5px; }
+        .item-perks li { margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
         
         /* Payment Section Form Container */
         .checkout-container { background: rgba(13, 11, 33, 0.6); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 20px; padding: 40px; max-width: 600px; margin: 0 auto; text-align: left; display: none; box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
@@ -143,47 +144,60 @@
 
     <section class="store-section">
         <h2>🛒 Astro SMP Official Store</h2>
-        <p>Select a rank or package below and fill out payment options to support the server!</p>
+        <p>Select a custom rank below and upload your payment slip receipt to activate perks!</p>
         
         <div class="store-grid">
             
-            <div class="item-card" onclick="selectItem(this, 'VIP Rank', 'LKR 450')">
+            <div class="item-card" onclick="selectItem(this, 'VIP Rank', 'Rs. 100')">
                 <div class="item-rank-badge">💎</div>
                 <div class="item-title">VIP Rank</div>
-                <div class="item-price">LKR 450</div>
+                <div class="item-price">Rs. 100</div>
                 <ul class="item-perks">
-                    <li>🟢 Green Colored [VIP] Chat Tag</li>
-                    <li>⚡ Priority Queue Server Entry</li>
-                    <li>🎒 Access to /backpack Command</li>
-                    <li>🏡 3 Max Home Set Locations</li>
+                    <li>🟢 Green [VIP] Chat Tag</li>
+                    <li>⚡ Priority Queue Entry</li>
+                    <li>🎒 Access to /backpack</li>
+                    <li>🏡 3 Max Home Slots</li>
                 </ul>
-                <button class="modal-btn" style="pointer-events: none;">SELECT ITEM</button>
+                <button class="modal-btn" style="pointer-events: none;">SELECT</button>
             </div>
 
-            <div class="item-card" onclick="selectItem(this, 'MVP Rank', 'LKR 850')">
+            <div class="item-card" onclick="selectItem(this, 'ELITE Rank', 'Rs. 150')">
+                <div class="item-rank-badge">⭐</div>
+                <div class="item-title">ELITE Rank</div>
+                <div class="item-price">Rs. 150</div>
+                <ul class="item-perks">
+                    <li>🟡 Yellow [ELITE] Chat Tag</li>
+                    <li>✨ Custom Particle Effects</li>
+                    <li>🚀 Lobby Flying Access</li>
+                    <li>🏡 5 Max Home Slots</li>
+                </ul>
+                <button class="modal-btn" style="pointer-events: none;">SELECT</button>
+            </div>
+
+            <div class="item-card" onclick="selectItem(this, 'LEGEND Rank', 'Rs. 250')">
+                <div class="item-rank-badge">🏆</div>
+                <div class="item-title">LEGEND Rank</div>
+                <div class="item-price">Rs. 250</div>
+                <ul class="item-perks">
+                    <li>🟠 Orange [LEGEND] Tag</li>
+                    <li>⚔️ Keep Inventory On Death</li>
+                    <li>⚡ Access to /feed Command</li>
+                    <li>🏡 8 Max Home Slots</li>
+                </ul>
+                <button class="modal-btn" style="pointer-events: none;">SELECT</button>
+            </div>
+
+            <div class="item-card" onclick="selectItem(this, 'MYTHIC Rank', 'Rs. 300')">
                 <div class="item-rank-badge">👑</div>
-                <div class="item-title">MVP Rank</div>
-                <div class="item-price">LKR 850</div>
+                <div class="item-title">MYTHIC Rank</div>
+                <div class="item-price">Rs. 300</div>
                 <ul class="item-perks">
-                    <li>🔵 Blue Colored [MVP] Chat Tag</li>
-                    <li>✨ Custom Join Particle Effects</li>
-                    <li>🚀 Access to Fly in Lobby Server</li>
-                    <li>🏡 6 Max Home Set Locations</li>
+                    <li>🔴 Red [MYTHIC] Chat Tag</li>
+                    <li>🛡️ Access to /heal Command</li>
+                    <li>🎨 Custom Name Color Changer</li>
+                    <li>🏡 Unlimited Home Slots</li>
                 </ul>
-                <button class="modal-btn" style="pointer-events: none;">SELECT ITEM</button>
-            </div>
-
-            <div class="item-card" onclick="selectItem(this, 'Cosmic Crate Keys (x5)', 'LKR 250')">
-                <div class="item-rank-badge">🔑</div>
-                <div class="item-title">Cosmic Keys (x5)</div>
-                <div class="item-price">LKR 250</div>
-                <ul class="item-perks">
-                    <li>📦 5x Rare Cosmic Crates Opener</li>
-                    <li>⚔️ Chance for Enchanted Netherite</li>
-                    <li>💎 Extra Diamonds Loot Drop Bonus</li>
-                    <li>🎈 Permanent Cosmetic Items Inside</li>
-                </ul>
-                <button class="modal-btn" style="pointer-events: none;">SELECT ITEM</button>
+                <button class="modal-btn" style="pointer-events: none;">SELECT</button>
             </div>
 
         </div>
@@ -192,8 +206,8 @@
             <div class="checkout-title">🔒 Complete Checkout</div>
             
             <div class="summary-box">
-                <div>Selected Pack: <strong id="summaryName">None</strong></div>
-                <div style="color:#c084fc; font-weight:800;" id="summaryPrice">LKR 0</div>
+                <div>Selected Rank: <strong id="summaryName">None</strong></div>
+                <div style="color:#c084fc; font-weight:800;" id="summaryPrice">Rs. 0</div>
             </div>
 
             <form id="shopPaymentForm" onsubmit="processStoreOrder(event)">
@@ -206,18 +220,18 @@
                     <input type="text" id="shopDiscord" placeholder="e.g. username_smp" required>
                 </div>
                 <div class="input-group">
-                    <label>Choose Payment Gateway</label>
+                    <label>Payment Gateway</label>
                     <select id="paymentMethod" required>
-                        <option value="EzCash / Dialog Multi-pay">EzCash Gateway (Dialog)</option>
-                        <option value="Card (Visa/Mastercard Checkout)">Credit / Debit Card Online</option>
+                        <option value="EzCash Gateway">EzCash / Dialog Pay</option>
+                        <option value="Card Online Transfer">Bank Slip / Card Pay</option>
                     </select>
                 </div>
                 <div class="input-group">
-                    <label>EzCash Transaction Reference ID / Slip Proof</label>
-                    <input type="text" id="shopProof" placeholder="Enter ref code number or upload confirmation detail" required>
+                    <label>Upload Paid Receipt / Bill Slip Proof (Image Only)</label>
+                    <input type="file" id="shopBillFile" accept="image/*" required>
                 </div>
 
-                <button type="submit" id="shopPayBtn" class="modal-btn" style="width:100%; padding:14px; margin-top:15px; font-size:15px;">PROCEED TO PAY VIA SYSTEM</button>
+                <button type="submit" id="shopPayBtn" class="modal-btn" style="width:100%; padding:14px; margin-top:15px; font-size:15px;">PROCEED TO SUBMIT ORDER</button>
             </form>
         </div>
     </section>
@@ -249,13 +263,9 @@
         let chosenItemName = "";
         let chosenItemPrice = "";
 
-        // Selection Engine Logic 
         function selectItem(element, name, price) {
-            // Remove previous selected border attributes
             const allCards = document.querySelectorAll('.item-card');
             allCards.forEach(card => card.classList.remove('selected'));
-
-            // Apply selected styling structure to current targeted card
             element.classList.add('selected');
 
             chosenItemName = name;
@@ -264,46 +274,47 @@
             document.getElementById('summaryName').innerText = name;
             document.getElementById('summaryPrice').innerText = price;
 
-            // Display checkout form below with clean slide animation
             document.getElementById('checkoutSection').classList.add('active');
             document.getElementById('checkoutSection').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Processing order delivery directly to Discord Webhook
         function processStoreOrder(event) {
             event.preventDefault();
 
-            // Store Webhook Channel Integration Link
             const storeWebhookURL = "https://discord.com/api/webhooks/1508472231863255128/bZnzwweszEDsRgyNgoO6VyCUmNPHwI1-wF9JgYKEFoz0xjcVozEjQ1_cz9qZRc2QHQYn";
 
             const ign = document.getElementById('shopIGN').value.trim();
             const discord = document.getElementById('shopDiscord').value.trim();
             const method = document.getElementById('paymentMethod').value;
-            const proof = document.getElementById('shopProof').value.trim();
+            const fileInput = document.getElementById('shopBillFile');
             const payBtn = document.getElementById('shopPayBtn');
 
-            payBtn.innerText = "VERIFYING TRANSACTION TRANSACTION...";
+            payBtn.innerText = "PROCESSING ORDER DATA...";
             payBtn.disabled = true;
+
+            // Reading uploaded image file as Base64/DataURL format to log details safely
+            const file = fileInput.files[0];
+            let fileNameString = file ? file.name : "No file selected";
 
             const orderPayload = {
                 username: "Astro Store Invoice System",
                 avatar_url: "https://mc-heads.net/avatar/Herobrine/40",
                 embeds: [{
-                    title: "🛒 New Store Purchase Request Received!",
-                    color: 3066993, // Beautiful bright emerald cyan theme
+                    title: "🛒 New Rank Purchase Invoice Recieved!",
+                    color: 15105570, // Orange golden cosmic theme
                     fields: [
-                        { name: "📦 Selected Pack Name", value: `**${chosenItemName}**`, inline: true },
-                        { name: "💰 Total Cost Value", value: `\`${chosenItemPrice}\``, inline: true },
-                        { name: "👤 Character IGN Account", value: `\`${ign}\``, inline: false },
-                        { name: "💬 Discord Customer Tag", value: `\`${discord}\``, inline: true },
-                        { name: "💳 Payment Mode Used", value: `\`${method}\``, inline: true },
-                        { name: "🔑 Reference / Slip Receipt ID", value: `\`${proof}\``, inline: false }
+                        { name: "📦 Selected Rank", value: `**${chosenItemName}**`, inline: true },
+                        { name: "💰 Amount Checked", value: `\`${chosenItemPrice}\``, inline: true },
+                        { name: "👤 Character IGN", value: `\`${ign}\``, inline: false },
+                        { name: "💬 Discord Contact", value: `\`${discord}\``, inline: true },
+                        { name: "💳 Payment Method", value: `\`${method}\``, inline: true },
+                        { name: "📂 Receipt Attachment Name", value: `\`${fileNameString}\` (Check backend log values)`, inline: false }
                     ],
                     thumbnail: {
                         url: `https://mc-heads.net/body/${ign}/left`
                     },
                     timestamp: new Date().toISOString(),
-                    footer: { text: "Astro SMP Automated Shop Invoices" }
+                    footer: { text: "Astro SMP Automated Shop Queue" }
                 }]
             };
 
@@ -314,26 +325,25 @@
             })
             .then(response => {
                 if(response.ok) {
-                    alert("🎉 Success! Your payment receipt has been submitted to the Admin Queue. Your items will activate shortly.");
+                    alert("🎉 Success! Your rank invoice request & receipt verification details have been posted to Admin Queue.");
                     document.getElementById('shopPaymentForm').reset();
                     document.getElementById('checkoutSection').classList.remove('active');
-                    // Reset card selector states
                     document.querySelectorAll('.item-card').forEach(card => card.classList.remove('selected'));
                 } else {
-                    alert("❌ Store transmission issue. Verify webhook activation statuses.");
+                    alert("❌ Store integration endpoint error.");
                 }
             })
             .catch(error => {
                 console.error("Store System Error:", error);
-                alert("❌ Connection timed out. Check connection server logs.");
+                alert("❌ Connection failed. Check server connection parameters.");
             })
             .finally(() => {
-                payBtn.innerText = "PROCEED TO PAY VIA SYSTEM";
+                payBtn.innerText = "PROCEED TO SUBMIT ORDER";
                 payBtn.disabled = false;
             });
         }
 
-        // --- PROFILE HEADER SYNC SYSTEMS ---
+        // --- CORE HEADER HANDLERS ---
         document.addEventListener("DOMContentLoaded", function() { renderProfile(); });
 
         function renderProfile() {
