@@ -143,7 +143,7 @@
         .nav-links li.active a { background: rgba(168, 85, 247, 0.08); border: 2px solid #a855f7; color: #c084fc; }
         .nav-links li a:hover { background: rgba(255, 255, 255, 0.05); color: #c084fc; }
 
-        /* MODAL BOX LOGIN */
+        /* MODAL BOX LOGIN & REGISTER */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 2, 6, 0.85);
             backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 2000;
@@ -151,12 +151,17 @@
         }
         .modal-overlay.active { display: flex; opacity: 1; }
         .modal-container {
-            background: rgba(13, 11, 33, 0.95); border: 2px solid rgba(168, 85, 247, 0.5); padding: 35px;
-            border-radius: 20px; width: 100%; max-width: 400px; box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+            background: rgba(13, 11, 33, 0.95); border: 2px solid rgba(168, 85, 247, 0.5); padding: 30px;
+            border-radius: 20px; width: 100%; max-width: 440px; box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
             text-align: center; position: relative; transform: translateY(-20px); transition: transform 0.3s ease;
+            max-height: 90vh; overflow-y: auto;
         }
+        
+        .modal-container::-webkit-scrollbar { width: 6px; }
+        .modal-container::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 10px; }
+
         .modal-overlay.active .modal-container { transform: translateY(0); }
-        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 24px; color: #928da3; cursor: pointer; transition: color 0.2s; }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 24px; color: #928da3; cursor: pointer; transition: color 0.2s; z-index: 10; }
         .close-modal:hover { color: #ffffff; }
         .modal-title { font-size: 24px; font-weight: 800; color: #a855f7; text-transform: uppercase; margin-bottom: 5px; text-shadow: 0 0 10px rgba(168, 85, 247, 0.3); }
         .modal-subtitle { color: #928da3; font-size: 13px; margin-bottom: 20px; }
@@ -164,8 +169,18 @@
         .input-group label { display: block; font-size: 11px; color: #cbd5e1; margin-bottom: 5px; text-transform: uppercase; font-weight: 600; }
         .input-group input { width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; color: #ffffff; font-size: 14px; outline: none; transition: border-color 0.2s; }
         .input-group input:focus { border-color: #a855f7; }
+        
+        .input-group input[type="date"] { color-scheme: dark; }
+
         .modal-btn { width: 100%; padding: 12px; background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); border: none; border-radius: 8px; color: #ffffff; font-size: 14px; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; margin-top: 10px; }
         .modal-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(168, 85, 247, 0.4); }
+        .modal-btn:disabled { background: #474354; color: #8e8a9c; cursor: not-allowed; transform: none; box-shadow: none; }
+        
+        .form-switch-text { font-size: 13px; color: #928da3; margin-top: 15px; padding-top: 5px; }
+        .form-switch-text a { color: #a855f7; text-decoration: none; font-weight: 600; cursor: pointer; }
+        .form-switch-text a:hover { text-decoration: underline; }
+
+        .hidden-form { display: none; }
 
         /* Hero Section */
         header { height: 75vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 20px; }
@@ -173,7 +188,6 @@
         @keyframes textPulse { 0% { filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.2)); } 100% { filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.5)); } }
         header p { font-size: 18px; color: #928da3; max-width: 650px; margin-bottom: 35px; line-height: 1.6; }
         
-        /* Action Buttons Layout (Discord & Apply) */
         .action-container { display: flex; gap: 20px; justify-content: center; align-items: center; margin-top: 5px; }
         .action-btn { text-decoration: none; padding: 14px 32px; border-radius: 12px; font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; display: flex; align-items: center; gap: 10px; transition: all 0.3s ease; box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); }
         .btn-discord { background: #5865F2; border: 2px solid #5865F2; color: #ffffff; }
@@ -181,7 +195,6 @@
         .btn-apply { background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); border: 2px solid #a855f7; color: #ffffff; }
         .btn-apply:hover { background: rgba(168, 85, 247, 0.05); transform: translateY(-3px); box-shadow: 0 0 25px rgba(168, 85, 247, 0.4); }
         
-        /* Cleaned End Fight Container (No colored borders) */
         .end-fight-container { text-align: center; margin: 20px 0 50px 0; padding: 10px; background: transparent; }
         .end-fight-text { font-size: 18px; font-weight: 800; color: #ffffff; letter-spacing: 1px; }
         .end-fight-text span { color: #ff4a4a; text-shadow: 0 0 10px rgba(255, 74, 74, 0.5); }
@@ -232,22 +245,64 @@
         <p class="end-fight-text">⚔️ NEXT END FIGHT DATE: <span>2026 / 06 / 15</span></p>
     </div>
 
-    <div class="modal-overlay" id="loginModal">
+    <div class="modal-overlay" id="authModal">
         <div class="modal-container">
-            <span class="close-modal" onclick="closeLoginModal()">&times;</span>
-            <div class="modal-title">Minecraft Authentication</div>
-            <div class="modal-subtitle">Enter details to sync your custom profile overlay</div>
-            <form onsubmit="handleLoginSubmit(event)">
-                <div class="input-group">
-                    <label>Minecraft IGN (Username)</label>
-                    <input type="text" id="loginIGN" placeholder="e.g., Steve_Cosmic" required>
+            <span class="close-modal" onclick="closeAuthModal()">&times;</span>
+            
+            <div id="loginFormSection">
+                <div class="modal-title">Astro Login</div>
+                <div class="modal-subtitle">Log in to sync your profile overlay</div>
+                <form onsubmit="handleLoginSubmit(event)">
+                    <div class="input-group">
+                        <label>Minecraft IGN (Username)</label>
+                        <input type="text" id="loginIGN" placeholder="e.g., Steve_Cosmic" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPass" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="modal-btn">LOGIN & SYNC</button>
+                </form>
+                <div class="form-switch-text">
+                    Don't have an account? <a onclick="switchForm('register')">Register here</a>
                 </div>
-                <div class="input-group">
-                    <label>In-game Password</label>
-                    <input type="password" id="loginPass" placeholder="••••••••" required>
+            </div>
+
+            <div id="registerFormSection" class="hidden-form">
+                <div class="modal-title">Astro Register</div>
+                <div class="modal-subtitle">Create an account for Astro SMP portal</div>
+                <form id="regForm" onsubmit="handleRegisterSubmit(event)">
+                    <div class="input-group">
+                        <label>Minecraft IGN (Username)</label>
+                        <input type="text" id="registerIGN" placeholder="e.g., Steve_Cosmic" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" id="registerEmail" placeholder="e.g., player@example.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Discord Username</label>
+                        <input type="text" id="registerDiscord" placeholder="e.g., cosmic_steve" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Birthday (Upan Dinaya)</label>
+                        <input type="date" id="registerBirthday" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="registerPass" placeholder="Create Password" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Confirm Password</label>
+                        <input type="password" id="registerConfirmPass" placeholder="Confirm Password" required>
+                    </div>
+                    <button type="submit" id="regBtn" class="modal-btn">CREATE ACCOUNT</button>
+                </form>
+                <div class="form-switch-text">
+                    Already registered? <a onclick="switchForm('login')">Login here</a>
                 </div>
-                <button type="submit" class="modal-btn">PROCEED & SYNC</button>
-            </form>
+            </div>
+
         </div>
     </div>
 
@@ -256,8 +311,17 @@
     </footer>
 
     <script>
+        // DISCORD WEBHOOK AND GOOGLE SHEETS API CONFIG
+        const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1508858968364155081/A4-x5hXT-DT2a8ZAH_iuGiR0GeeBg7i83W0E9Z-rnZj2Y88h2uh19T2wn-FizifYtIDN";
+        
+        // 🚨 මෙන්න මෙතන තියෙන ලින්ක් එක වෙනුවට ඔයාගේ SheetDB ලින්ක් එක දාන්න 🚨
+        const GOOGLE_SHEET_API_URL = "https://sheetdb.io/api/v1/මෙතනට_ඔයාගේ_SHEETDB_ID_එක_දාන්න";
+
         document.addEventListener("DOMContentLoaded", function() {
             renderProfile();
+            if(!localStorage.getItem('astro_registered_users')) {
+                localStorage.setItem('astro_registered_users', JSON.stringify([]));
+            }
         });
 
         function renderProfile() {
@@ -266,8 +330,8 @@
 
             if (!savedUser) {
                 wrapper.innerHTML = `
-                    <div class="user-profile-display" onclick="openLoginModal()">
-                        <div class="user-name-text">🔒 LOGIN VIA IGN</div>
+                    <div class="user-profile-display" onclick="openAuthModal()">
+                        <div class="user-name-text">🔒 LOGIN / REGISTER</div>
                     </div>
                 `;
             } else {
@@ -287,25 +351,136 @@
             }
         }
 
-        function openLoginModal() {
-            document.getElementById('loginModal').classList.add('active');
+        function openAuthModal() {
+            document.getElementById('authModal').classList.add('active');
+            switchForm('login');
         }
 
-        function closeLoginModal() {
-            document.getElementById('loginModal').classList.remove('active');
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.remove('active');
         }
 
+        function switchForm(formType) {
+            if(formType === 'register') {
+                document.getElementById('loginFormSection').classList.add('hidden-form');
+                document.getElementById('registerFormSection').classList.remove('hidden-form');
+            } else {
+                document.getElementById('registerFormSection').classList.add('hidden-form');
+                document.getElementById('loginFormSection').classList.remove('hidden-form');
+            }
+        }
+
+        function handleRegisterSubmit(event) {
+            event.preventDefault();
+            const btn = document.getElementById('regBtn');
+            
+            const ign = document.getElementById('registerIGN').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const discord = document.getElementById('registerDiscord').value.trim();
+            const birthday = document.getElementById('registerBirthday').value;
+            const pass = document.getElementById('registerPass').value;
+            const confirmPass = document.getElementById('registerConfirmPass').value;
+
+            if (pass !== confirmPass) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerText = "PROCESSING...";
+
+            // 1. Local Storage save logic
+            let users = JSON.parse(localStorage.getItem('astro_registered_users')) || [];
+            const userExists = users.some(u => u.name.toLowerCase() === ign.toLowerCase());
+            if (userExists) {
+                alert("This Minecraft IGN is already registered!");
+                btn.disabled = false;
+                btn.innerText = "CREATE ACCOUNT";
+                return;
+            }
+
+            const newUser = { name: ign, email: email, discord: discord, birthday: birthday, password: pass };
+            users.push(newUser);
+            localStorage.setItem('astro_registered_users', JSON.stringify(users));
+
+            // 2. Discord Payload Layout
+            const embedData = {
+                username: "Astro SMP Portal",
+                avatar_url: "https://mc-heads.net/avatar/Astro/40",
+                embeds: [{
+                    title: "✨ New User Registered! ✨",
+                    description: "A new player has successfully registered on the Astro SMP Website.",
+                    color: 11032055, 
+                    thumbnail: { url: `https://mc-heads.net/body/${ign}/right` },
+                    fields: [
+                        { name: "🎮 Minecraft IGN", value: `\`${ign}\``, inline: true },
+                        { name: "💬 Discord Username", value: `\`${discord}\``, inline: true },
+                        { name: "📧 Email Address", value: email, inline: false },
+                        { name: "🎂 Birthday", value: birthday, inline: true }
+                    ],
+                    footer: { text: "Astro SMP Logger • Live Updates" },
+                    timestamp: new Date().toISOString()
+                }]
+            };
+
+            // 3. Google Sheet Payload Layout
+            const sheetData = {
+                data: [
+                    { name: ign, email: email, discord: discord, birthday: birthday }
+                ]
+            };
+
+            // Trigger parallel synchronization
+            Promise.all([
+                fetch(DISCORD_WEBHOOK_URL, {
+                    method: "POST",
+                    mode: "cors",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(embedData)
+                }),
+                fetch(GOOGLE_SHEET_API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(sheetData)
+                })
+            ])
+            .then(() => {
+                alert("Registration Successful! Data synced to Discord & Google Cloud Database.");
+                switchForm('login');
+                document.getElementById('regForm').reset();
+            })
+            .catch(err => {
+                console.error("Sync Error Details:", err);
+                alert("Registration saved! (Network webhook exception occurred)");
+                switchForm('login');
+                document.getElementById('regForm').reset();
+            })
+            .finally(() => {
+                btn.disabled = false;
+                btn.innerText = "CREATE ACCOUNT";
+            });
+        }
+
+        // LOGIN LOGIC
         function handleLoginSubmit(event) {
             event.preventDefault();
             const ign = document.getElementById('loginIGN').value.trim();
-            if (ign !== "") {
+            const pass = document.getElementById('loginPass').value;
+
+            let users = JSON.parse(localStorage.getItem('astro_registered_users')) || [];
+            const validUser = users.find(u => u.name.toLowerCase() === ign.toLowerCase() && u.password === pass);
+
+            if (validUser) {
                 const userData = {
-                    name: ign,
-                    avatar: `https://mc-heads.net/avatar/${ign}/40`
+                    name: validUser.name,
+                    avatar: `https://mc-heads.net/avatar/${validUser.name}/40`
                 };
                 localStorage.setItem('astro_user', JSON.stringify(userData));
-                closeLoginModal();
+                closeAuthModal();
                 renderProfile();
+                document.getElementById('loginFormSection').querySelector('form').reset();
+            } else {
+                alert("Invalid Username or Password!");
             }
         }
 
