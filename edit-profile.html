@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile | Astro SMP</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght=300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #030206;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Space Floating Background */
+        .space-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2;
+            background: radial-gradient(circle at 50% 50%, #0d0b21 0%, #030206 100%);
+        }
+        .space-bg::after {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                radial-gradient(circle at 15% 25%, rgba(255, 255, 255, 0.35) 1.5px, transparent 1.5px),
+                radial-gradient(circle at 80% 35%, rgba(255, 255, 255, 0.3) 2px, transparent 2px),
+                radial-gradient(circle at 35% 75%, rgba(255, 255, 255, 0.25) 1px, transparent 1px);
+            background-size: 400px 400px;
+            animation: spaceGlow 20s linear infinite;
+        }
+        @keyframes spaceGlow { 0% { transform: translateY(0); } 100% { transform: translateY(-400px); } }
+
+        /* Profile Card Box */
+        .edit-card {
+            background: rgba(13, 11, 33, 0.95);
+            border: 2px solid #a855f7;
+            padding: 40px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+            text-align: center;
+        }
+
+        .title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #a855f7;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
+        }
+
+        .subtitle {
+            color: #928da3;
+            font-size: 13px;
+            margin-bottom: 30px;
+        }
+
+        /* Character Avatar Preview Style */
+        .avatar-container {
+            margin-bottom: 25px;
+        }
+        .preview-img {
+            width: 85px;
+            height: 85px;
+            border-radius: 12px;
+            border: 2px solid #a855f7;
+            object-fit: cover;
+            background: #221f3b;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+        }
+
+        /* Form Inputs */
+        .input-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            font-size: 11px;
+            color: #cbd5e1;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .input-group input:focus {
+            border-color: #a855f7;
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        /* Buttons Layout */
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        .btn {
+            flex: 1;
+            padding: 13px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+        .btn-save {
+            background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+        }
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+        }
+        .btn-back {
+            background: #1e1b4b;
+            color: #cbd5e1;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn-back:hover {
+            background: #2e2a78;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="space-bg"></div>
+
+    <div class="edit-card">
+        <div class="title">Edit Profile</div>
+        <div class="subtitle">Update your Astro SMP Account Settings</div>
+
+        <div class="avatar-container">
+            <img src="" id="avatarPreview" class="preview-img" alt="Avatar">
+        </div>
+
+        <form onsubmit="updateProfile(event)">
+            <div class="input-group">
+                <label>Minecraft IGN (Display Name)</label>
+                <input type="text" id="editIGN" required oninput="syncLiveAvatar(this.value)">
+            </div>
+
+            <div class="input-group">
+                <label>Account Password</label>
+                <input type="password" id="editPassword" placeholder="Enter new password" required>
+            </div>
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-back" onclick="goHome()">Go Back</button>
+                <button type="submit" class="btn btn-save">Save Changes</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Log වෙලා ඉන්න userව ගන්නවා
+            const savedUser = localStorage.getItem('astro_user');
+            if (!savedUser) {
+                alert("Please login first!");
+                window.location.href = "index.html";
+                return;
+            }
+
+            const user = JSON.parse(savedUser);
+            document.getElementById('editIGN').value = user.name;
+            document.getElementById('avatarPreview').src = user.avatar;
+
+            // මුළු User List එකෙන්ම මේ userගේ password එක හොයාගන්නවා
+            const registeredUsers = JSON.parse(localStorage.getItem('astro_registered_users')) || [];
+            const currentUserData = registeredUsers.find(u => u.name.toLowerCase() === user.name.toLowerCase());
+            if (currentUserData) {
+                document.getElementById('editPassword').value = currentUserData.password;
+            }
+        });
+
+        // Type කරද්දීම ලයිව් Minecraft Head එක වෙනස් වෙන්න හැදුවා
+        function syncLiveAvatar(username) {
+            const preview = document.getElementById('avatarPreview');
+            if(username.trim() !== "") {
+                preview.src = `https://mc-heads.net/avatar/${username.trim()}/40`;
+            }
+        }
+
+        function goHome() {
+            window.location.href = "index.html";
+        }
+
+        function updateProfile(event) {
+            event.preventDefault();
+
+            const newIGN = document.getElementById('editIGN').value.trim();
+            const newPass = document.getElementById('editPassword').value;
+            const newAvatar = `https://mc-heads.net/avatar/${newIGN}/40`;
+
+            const savedUser = JSON.parse(localStorage.getItem('astro_user'));
+            let registeredUsers = JSON.parse(localStorage.getItem('astro_registered_users')) || [];
+
+            // 1. මුලින්ම පරණ නම තිබ්බ index එක හොයාගන්නවා
+            const userIndex = registeredUsers.findIndex(u => u.name.toLowerCase() === savedUser.name.toLowerCase());
+
+            if (userIndex !== -1) {
+                // 2. Register වෙලා තියෙන ලැයිස්තුවේ දත්ත update කරනවා
+                registeredUsers[userIndex].name = newIGN;
+                registeredUsers[userIndex].password = newPass;
+                registeredUsers[userIndex].avatar = newAvatar;
+                localStorage.setItem('astro_registered_users', JSON.stringify(registeredUsers));
+            }
+
+            // 3. දැනට Active වෙලා ඉන්න Login Session එකත් update කරනවා
+            const updatedSession = { name: newIGN, avatar: newAvatar };
+            localStorage.setItem('astro_user', JSON.stringify(updatedSession));
+
+            alert("Profile Updated Successfully!");
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
