@@ -101,12 +101,11 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Top Left Wrapper Container fixed position */
+        /* Top Left Wrapper */
         .brand-wrapper {
             display: flex;
             align-items: center;
-            gap: 15px;
-            position: relative;
+            gap: 20px;
         }
 
         .logo-container {
@@ -118,33 +117,63 @@
 
         .logo-text { font-size: 24px; font-weight: 800; letter-spacing: 1.5px; color: #a855f7; text-transform: uppercase; text-shadow: 0 0 12px rgba(168, 85, 247, 0.4); }
 
-        /* FIXED USER PROFILE BUTTON AND DROPDOWN CONFIGURATION */
+        /* LEFT SIDE USER PROFILE OVERLAY */
         .user-profile-wrapper { position: relative; display: inline-block; }
         .user-profile-display {
-            display: flex; align-items: center; gap: 10px; background: rgba(168, 85, 247, 0.15); border: 2px solid #a855f7;
-            padding: 6px 16px; border-radius: 30px; box-shadow: 0 0 12px rgba(168, 85, 247, 0.2); cursor: pointer; transition: all 0.3s ease;
+            display: flex; align-items: center; gap: 12px; background: rgba(168, 85, 247, 0.15); border: 2px solid #a855f7;
+            padding: 8px 16px; border-radius: 30px; box-shadow: 0 0 12px rgba(168, 85, 247, 0.2); cursor: pointer; transition: all 0.3s ease;
         }
         .user-profile-display:hover { background: rgba(168, 85, 247, 0.25); box-shadow: 0 0 18px rgba(168, 85, 247, 0.5); }
-        .user-avatar { width: 28px; height: 28px; border-radius: 50px; border: 1px solid #ffffff; background: #221f3b; object-fit: cover; }
-        .user-name-text { font-size: 13px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; }
-        .settings-icon { font-size: 10px; color: #c084fc; transition: transform 0.3s ease; }
+        
+        /* Minecraft Face Image Style (Rounded Square) */
+        .user-avatar { width: 30px; height: 30px; border-radius: 8px; border: 1px solid #ffffff; background: #221f3b; object-fit: cover; }
+        .user-name-text { font-size: 14px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; text-transform: uppercase; }
+        .settings-icon { font-size: 11px; color: #c084fc; transition: transform 0.3s ease; }
         
         .user-profile-wrapper.active-menu .settings-icon { transform: rotate(180deg); }
 
+        /* Dropdown Fix Area */
         .profile-dropdown {
-            position: absolute; top: 52px; left: 0; background: #0d0b21; border: 2px solid #a855f7; border-radius: 12px;
-            width: 210px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); display: none; flex-direction: column; overflow: hidden; z-index: 1010;
+            position: absolute; top: 55px; left: 0; background: #0d0b21; border: 2px solid #a855f7; border-radius: 14px;
+            width: 230px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); display: none; flex-direction: column; overflow: hidden; z-index: 1050;
         }
         .profile-dropdown.active { display: flex; }
-        .dropdown-btn { background: none; border: none; color: #ffffff; padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; width: 100%; }
-        .dropdown-btn:hover { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
-        .dropdown-btn.logout-style { color: #ff4a4a; border-top: 1px solid rgba(255, 255, 255, 0.05); }
-        .dropdown-btn.logout-style:hover { background: rgba(255, 74, 74, 0.1); color: #ff4a4a; }
+        .dropdown-btn { background: none; border: none; color: #ffffff; padding: 14px 18px; text-align: left; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; width: 100%; }
+        .dropdown-btn:hover { background: rgba(168, 85, 247, 0.2); color: #c084fc; padding-left: 22px; }
+
+        /* RIGHT SIDE NAV ITEMS */
+        .nav-right-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
 
         .nav-links { display: flex; list-style: none; gap: 15px; align-items: center; }
         .nav-links li a { color: #ffffff; text-decoration: none; font-weight: 700; font-size: 14px; text-transform: uppercase; padding: 10px 18px; border-radius: 8px; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; }
         .nav-links li.active a { background: rgba(168, 85, 247, 0.08); border: 2px solid #a855f7; color: #c084fc; }
         .nav-links li a:hover { background: rgba(255, 255, 255, 0.05); color: #c084fc; }
+
+        /* DETACHED LOGIN BUTTON */
+        .auth-nav-btn {
+            background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
+            color: #ffffff; border: 1px solid #a855f7; padding: 10px 22px;
+            font-size: 13px; font-weight: 700; text-transform: uppercase;
+            border-radius: 30px; cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .auth-nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 22px rgba(168, 85, 247, 0.6);
+        }
+        .auth-nav-btn.logout-btn {
+            background: linear-gradient(135deg, #ff4a4a 0%, #c21a1a 100%);
+            border-color: #ff4a4a;
+            box-shadow: 0 0 15px rgba(255, 74, 74, 0.3);
+        }
+        .auth-nav-btn.logout-btn:hover {
+            box-shadow: 0 0 22px rgba(255, 74, 74, 0.6);
+        }
 
         /* MODAL BOX LOGIN & REGISTER */
         .modal-overlay {
@@ -226,12 +255,16 @@
                 <span class="logo-text">ASTRO SMP</span>
             </a>
         </div>
-        <ul class="nav-links">
-            <li class="active"><a href="index.html">🏠 HOME</a></li>
-            <li><a href="apply.html">📄 APPLY</a></li>
-            <li><a href="shop.html">🛒 STORE</a></li>
-            <li><a href="champions.html">🏆 CHAMPIONS</a></li>
-        </ul>
+
+        <div class="nav-right-container">
+            <ul class="nav-links">
+                <li class="active"><a href="index.html">🏠 HOME</a></li>
+                <li><a href="apply.html">📄 APPLY</a></li>
+                <li><a href="shop.html">🛒 STORE</a></li>
+                <li><a href="champions.html">🏆 CHAMPIONS</a></li>
+            </ul>
+            <div id="authBtnWrapper"></div>
+        </div>
     </nav>
 
     <header>
@@ -322,36 +355,37 @@
         const GOOGLE_SHEET_API_URL = "https://sheetdb.io/api/v1/මෙතනට_ඔයාගේ_SHEETDB_ID_එක_දාන්න";
 
         document.addEventListener("DOMContentLoaded", function() {
-            renderProfile();
+            renderNavbarElements();
             if(!localStorage.getItem('astro_registered_users')) {
                 localStorage.setItem('astro_registered_users', JSON.stringify([]));
             }
         });
 
-        // Left Alignment Top profile render trigger configuration
-        function renderProfile() {
-            const wrapper = document.getElementById('profileWrapper');
+        function renderNavbarElements() {
+            const profileWrapper = document.getElementById('profileWrapper');
+            const authBtnWrapper = document.getElementById('authBtnWrapper');
             const savedUser = localStorage.getItem('astro_user');
 
             if (!savedUser) {
-                wrapper.innerHTML = `
-                    <div class="user-profile-display" onclick="openAuthModal()">
-                        <div class="user-name-text">🔒 LOGIN</div>
-                    </div>
+                profileWrapper.innerHTML = '';
+                authBtnWrapper.innerHTML = `
+                    <button class="auth-nav-btn" onclick="openAuthModal()">🔒 LOGIN / REGISTER</button>
                 `;
             } else {
                 const user = JSON.parse(savedUser);
-                wrapper.innerHTML = `
+                profileWrapper.innerHTML = `
                     <div class="user-profile-display" onclick="toggleDropdown(event)">
                         <img src="${user.avatar}" class="user-avatar" alt="Avatar">
                         <div class="user-name-text">${user.name}</div>
                         <span class="settings-icon">▼</span>
                     </div>
                     <div class="profile-dropdown" id="profileDropdown">
-                        <button class="dropdown-btn" onclick="editUsername()">✏️ Change Display Name</button>
-                        <button class="dropdown-btn" onclick="editAvatar()">👤 Change Character IGN</button>
-                        <button class="dropdown-btn logout-style" onclick="logoutUser()">🚪 Log Out System</button>
+                        <button class="dropdown-btn" onclick="editUsername(event)">✏️ Change Display Name</button>
+                        <button class="dropdown-btn" onclick="editAvatar(event)">👤 Change Character IGN</button>
                     </div>
+                `;
+                authBtnWrapper.innerHTML = `
+                    <button class="auth-nav-btn logout-btn" onclick="logoutUser()">🚪 LOGOUT</button>
                 `;
             }
         }
@@ -375,7 +409,6 @@
             }
         }
 
-        // Convert base64 format trigger function
         function getBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -414,13 +447,12 @@
                 return;
             }
 
-            // Sync base 64 image logic configuration
             let finalAvatar = `https://mc-heads.net/avatar/${ign}/40`;
             if (photoFile) {
                 try {
                     finalAvatar = await getBase64(photoFile);
                 } catch (e) {
-                    console.error("Base64 reading profile photo exception.");
+                    console.error("Base64 image generation error.");
                 }
             }
 
@@ -502,16 +534,16 @@
                 };
                 localStorage.setItem('astro_user', JSON.stringify(userData));
                 closeAuthModal();
-                renderProfile();
+                renderNavbarElements();
                 document.getElementById('loginFormSection').querySelector('form').reset();
             } else {
                 alert("Invalid Username or Password!");
             }
         }
 
-        // Fixed Active class targeting trigger
+        // Dropdown toggle function with stopPropagation fix
         function toggleDropdown(event) {
-            event.stopPropagation();
+            event.stopPropagation(); // Dropdown eka click karaddima vahana eka thahanam karayi
             const dropdown = document.getElementById('profileDropdown');
             const wrapper = document.getElementById('profileWrapper');
             
@@ -519,38 +551,43 @@
             wrapper.classList.toggle('active-menu');
         }
 
-        window.onclick = function() {
+        // Window outside-click fix
+        window.onclick = function(event) {
             const dropdown = document.getElementById('profileDropdown');
             const wrapper = document.getElementById('profileWrapper');
-            if (dropdown && dropdown.classList.contains('active')) {
+            // User click karana thana profile menu eka athule nethnam pamanak dropdown eka vahanna
+            if (dropdown && dropdown.classList.contains('active') && !wrapper.contains(event.target)) {
                 dropdown.classList.remove('active');
                 wrapper.classList.remove('active-menu');
             }
         }
 
-        function editUsername() {
+        // Edit function with event support
+        function editUsername(event) {
+            event.stopPropagation(); // Menu eka close novී thiyenna thහවුරු කරයි
             const savedUser = JSON.parse(localStorage.getItem('astro_user'));
             const newName = prompt("Enter your new Display Name:", savedUser.name);
             if (newName && newName.trim() !== "") {
                 savedUser.name = newName.trim();
                 localStorage.setItem('astro_user', JSON.stringify(savedUser));
-                renderProfile();
+                renderNavbarElements();
             }
         }
 
-        function editAvatar() {
+        function editAvatar(event) {
+            event.stopPropagation(); // Menu eka close novී thiyenna thහවුරු කරයි
             const savedUser = JSON.parse(localStorage.getItem('astro_user'));
             const newIGN = prompt("Enter new Minecraft IGN to update Skin avatar:");
             if (newIGN && newIGN.trim() !== "") {
                 savedUser.avatar = `https://mc-heads.net/avatar/${newIGN.trim()}/40`;
                 localStorage.setItem('astro_user', JSON.stringify(savedUser));
-                renderProfile();
+                renderNavbarElements();
             }
         }
 
         function logoutUser() {
             localStorage.removeItem('astro_user');
-            renderProfile();
+            renderNavbarElements();
             window.location.reload();
         }
     </script>
