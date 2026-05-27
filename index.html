@@ -136,11 +136,11 @@
             width: 220px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); display: none; flex-direction: column; overflow: hidden; z-index: 1010;
         }
         .profile-dropdown.active { display: flex; }
-        .dropdown-btn { background: none; border: none; color: #ffffff; padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; width: 100%; }
+        .dropdown-btn { background: none; border: none; color: #ffffff; padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; width: 100%; text-decoration: none; display: block; }
         .dropdown-btn:hover { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
         
         /* Logout Button එක Dropdown එක ඇතුලෙ ලස්සන කරන්න */
-        .dropdown-btn.logout-style { color: #ff4a4a; border-top: 1px solid rgba(168, 85, 247, 0.3); }
+        .dropdown-btn.logout-style { color: #ff4a4a; border-top: 1px solid rgba(168, 85, 247, 0.3); text-align: left; background: none; }
         .dropdown-btn.logout-style:hover { background: rgba(255, 74, 74, 0.1); color: #ff4a4a; }
 
         .nav-links { display: flex; list-style: none; gap: 15px; align-items: center; }
@@ -327,7 +327,7 @@
             }
         });
 
-        // PROFILE RENDER LOGIC WITH INCORPORATED LOGOUT BUTTON IN THE DROPDOWN
+        // PROFILE RENDER LOGIC WITH INCORPORATED EDIT PROFILE & LOGOUT LINK
         function renderProfile() {
             const wrapper = document.getElementById('profileWrapper');
             const savedUser = localStorage.getItem('astro_user');
@@ -347,8 +347,7 @@
                         <span class="settings-icon">▲</span>
                     </div>
                     <div class="profile-dropdown" id="profileDropdown">
-                        <button class="dropdown-btn" onclick="editUsername(event)">✏️ Change Display Name</button>
-                        <button class="dropdown-btn" onclick="editAvatar(event)">👤 Change Character IGN</button>
+                        <a href="edit-profile.html" class="dropdown-btn">✏️ Edit Profile</a>
                         <button class="dropdown-btn logout-style" onclick="logoutUser(event)">🚪 Log Out System</button>
                     </div>
                 `;
@@ -496,28 +495,6 @@
             if (dropdown && dropdown.classList.contains('active') && !mainWrapper.contains(event.target)) {
                 dropdown.classList.remove('active');
                 mainWrapper.classList.remove('active-menu');
-            }
-        }
-
-        function editUsername(event) {
-            event.stopPropagation();
-            const savedUser = JSON.parse(localStorage.getItem('astro_user'));
-            const newName = prompt("Enter your new Display Name:", savedUser.name);
-            if (newName && newName.trim() !== "") {
-                savedUser.name = newName.trim();
-                localStorage.setItem('astro_user', JSON.stringify(savedUser));
-                renderProfile();
-            }
-        }
-
-        function editAvatar(event) {
-            event.stopPropagation();
-            const savedUser = JSON.parse(localStorage.getItem('astro_user'));
-            const newIGN = prompt("Enter new Minecraft IGN to update Skin avatar:");
-            if (newIGN && newIGN.trim() !== "") {
-                savedUser.avatar = `https://mc-heads.net/avatar/${newIGN.trim()}/40`;
-                localStorage.setItem('astro_user', JSON.stringify(savedUser));
-                renderProfile();
             }
         }
 
